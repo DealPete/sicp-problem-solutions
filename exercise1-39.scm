@@ -1,0 +1,25 @@
+(define (cont-frac n d k)
+  (define (go total k)
+	(if (= k 1)
+	  (/ (n 1) total)
+	  (go (+ (d (- k 1)) (/ (n k) total)) (- k 1))))
+  (go (d k) k))
+
+(define (cont-frac-recur n d k)
+  (define (newd l)
+	(if (= l (- k 1))
+	  (+ (d l) (/ (n (+ l 1)) (d (+ l 1))))
+	  (d l)))
+  (if (= k 1)
+	(/ (n 1) (d 1))
+	(cont-frac-recur n newd (- k 1))))
+
+(define (tan-cf x k)
+  (define (t_n i)
+    (if (= i 1)
+	  x
+	  (- (* x x))))
+  (define (t_d i)
+	(- (* i 2) 1))
+  (cont-frac t_n t_d k))
+
